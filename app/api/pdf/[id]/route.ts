@@ -9,7 +9,7 @@ export async function GET(_req: NextRequest, ctx: RouteContext<"/api/pdf/[id]">)
     return new Response("PDF not found or expired", { status: 404 });
   }
 
-  return new Response(buffer, {
+  return new Response(new Uint8Array(buffer), {
     headers: {
       "Content-Type": "application/pdf",
       "Content-Disposition": 'inline; filename="scaler-roadmap.pdf"',

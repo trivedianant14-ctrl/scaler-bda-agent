@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     const buffer = await renderToBuffer(doc);
     const id = storePdf(buffer);
 
-    return new Response(buffer, {
+    return new Response(new Uint8Array(buffer), {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": 'inline; filename="scaler-roadmap.pdf"',
