@@ -1,5 +1,6 @@
 import React from "react";
 import { Document, Page, View, Text, StyleSheet } from "@react-pdf/renderer";
+import type { DocumentProps } from "@react-pdf/renderer";
 import type { GeneratedPdf, PdfSection } from "@/app/api/generate/route";
 
 // ─── SKEPTICAL_SWITCHER ────────────────────────────────────────────────────────
@@ -261,7 +262,7 @@ function AnxiousAspirer({ data }: { data: GeneratedPdf }) {
 }
 
 // ─── Factory ───────────────────────────────────────────────────────────────────
-export function buildPdfDocument(data: GeneratedPdf): React.ReactElement {
+export function buildPdfDocument(data: GeneratedPdf): React.ReactElement<DocumentProps> {
   switch (data.persona) {
     case "SKEPTICAL_SWITCHER":
       return <SkepticalSwitcherPdf data={data} />;
