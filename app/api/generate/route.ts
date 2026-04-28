@@ -12,10 +12,14 @@ You have:
 - Their open questions from the call
 - Scaler's knowledge base (real facts only)
 
-First, classify the lead's persona:
+First, classify the lead's persona. Common archetypes include:
 - SKEPTICAL_SWITCHER: Credentialed, ROI-focused, compares alternatives. Tone: peer-to-peer, data-forward, no fluff. Show them numbers.
 - SENIOR_VALIDATOR: Experienced, wants non-trivial value, hates generic. Tone: technical depth, instructor credibility, no hand-holding.
 - ANXIOUS_ASPIRER: Financial fear, family pressure, imposter risk. Tone: warm, reassuring, step-by-step. EMI math, alumni stories from similar backgrounds.
+- CAREER_ACCELERATOR: Already performing well, wants an edge or lateral move. Tone: peer-level, ambitious, outcome-focused.
+- LOST_EXPLORER: Browsing, no clear intent, needs discovery. Tone: open-ended, low-pressure, exploratory.
+
+But these are examples, not a fixed list. If the lead doesn't fit any of these cleanly, create a new label that captures their actual situation. The persona drives the tone and framing — accuracy matters more than fitting a predefined box. Use ALL_CAPS_WITH_UNDERSCORES for the persona field value.
 
 Then generate the PDF content as JSON with this structure:
 {
@@ -58,7 +62,7 @@ export type PdfSection = {
 };
 
 export type GeneratedPdf = {
-  persona: "SKEPTICAL_SWITCHER" | "SENIOR_VALIDATOR" | "ANXIOUS_ASPIRER";
+  persona: string;
   headline: string;
   greeting: string;
   sections: PdfSection[];

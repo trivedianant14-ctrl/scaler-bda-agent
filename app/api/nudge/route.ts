@@ -12,7 +12,7 @@ You have access to:
 
 Your output must include these sections, each 2-3 lines max:
 1. WHO THEY ARE: One-line plain English summary. Not a resume dump.
-2. LIKELY PERSONA: Classify as one of: Skeptical Switcher (credentialed, ROI-focused), Senior Validator (wants non-trivial value, hates generic), Anxious Aspirer (financial fear, imposter risk, family pressure), Career Accelerator (already good, wants the edge), or Lost Explorer (browsing, no clear intent). Explain why in one line.
+2. LIKELY PERSONA: Common archetypes include: Skeptical Switcher (credentialed, ROI-focused), Senior Validator (wants non-trivial value, hates generic), Anxious Aspirer (financial fear, imposter risk, family pressure), Career Accelerator (already doing well, wants an edge), Lost Explorer (browsing, no clear intent). But these are examples, not a fixed list. If this lead doesn't fit any cleanly, create a label that captures their actual situation. Accuracy matters more than fitting a predefined box. Explain the classification in one line.
 3. OPENING HOOK: A specific, non-generic first line for the call. Reference something real about them.
 4. 3 ANGLES THAT RESONATE: Each tied to something specific about this lead, not generic Scaler marketing. One line each.
 5. 3 OBJECTIONS TO EXPECT: Each with a one-line handle. Be specific to this person's likely concerns.

@@ -4,41 +4,42 @@ import type { DocumentProps } from "@react-pdf/renderer";
 import type { GeneratedPdf, PdfSection } from "@/app/api/generate/route";
 
 // ─── SKEPTICAL_SWITCHER ────────────────────────────────────────────────────────
+// Dark navy header bar, blue accents, gray evidence boxes, navy footer bar
 const ssStyles = StyleSheet.create({
-  page: { backgroundColor: "#ffffff", paddingTop: 0, paddingBottom: 40, fontFamily: "Helvetica" },
-  header: { backgroundColor: "#1a1a2e", paddingHorizontal: 36, paddingTop: 28, paddingBottom: 24 },
-  headerBrand: { color: "#6699ff", fontFamily: "Helvetica-Bold", fontSize: 10, letterSpacing: 3, marginBottom: 10 },
-  headerHeadline: { color: "#ffffff", fontFamily: "Helvetica-Bold", fontSize: 20, lineHeight: 1.25, marginBottom: 4 },
-  headerSub: { color: "#9999bb", fontFamily: "Helvetica", fontSize: 9 },
+  page: { backgroundColor: "#ffffff", paddingTop: 0, paddingBottom: 60, fontFamily: "Helvetica" },
+  header: {
+    backgroundColor: "#1a1a2e", paddingHorizontal: 36,
+    paddingTop: 14, paddingBottom: 14, minHeight: 60, justifyContent: "center",
+  },
+  headerBrand: { color: "#ffffff", fontFamily: "Helvetica-Bold", fontSize: 10, letterSpacing: 3, marginBottom: 6 },
+  headerHeadline: { color: "#ffffff", fontFamily: "Helvetica-Bold", fontSize: 13, lineHeight: 1.2 },
   body: { paddingHorizontal: 36, paddingTop: 20 },
-  greeting: { fontSize: 9.5, color: "#333344", lineHeight: 1.6, marginBottom: 18 },
-  section: {
-    marginBottom: 16, borderLeftWidth: 3, borderLeftColor: "#0066cc",
-    borderLeftStyle: "solid", paddingLeft: 12,
+  greeting: { fontSize: 10, color: "#1a1a1a", lineHeight: 1.6, marginBottom: 18 },
+  section: { marginBottom: 16 },
+  sectionTitle: { fontFamily: "Helvetica-Bold", fontSize: 10.5, color: "#0066cc", marginBottom: 6 },
+  sectionContent: { fontSize: 10, color: "#1a1a1a", lineHeight: 1.65, marginBottom: 8 },
+  evidenceList: {
+    backgroundColor: "#f0f4f8", borderLeftWidth: 3, borderLeftColor: "#0066cc",
+    borderLeftStyle: "solid", paddingLeft: 12, paddingRight: 10,
+    paddingVertical: 10, marginBottom: 8,
   },
-  sectionTitle: { fontFamily: "Helvetica-Bold", fontSize: 10.5, color: "#1a1a2e", marginBottom: 6 },
-  sectionContent: { fontSize: 9, color: "#333344", lineHeight: 1.65, marginBottom: 8 },
-  evidenceList: { marginBottom: 8 },
-  evidenceItem: {
-    flexDirection: "row", marginBottom: 3,
-  },
-  evidenceDot: { color: "#0066cc", fontFamily: "Helvetica-Bold", fontSize: 9, marginRight: 6, marginTop: 0.5 },
-  evidenceText: { fontSize: 8.5, color: "#1a1a2e", flex: 1, lineHeight: 1.5 },
+  evidenceItem: { flexDirection: "row", marginBottom: 4 },
+  evidenceDot: { color: "#0066cc", fontFamily: "Helvetica-Bold", fontSize: 10, marginRight: 6, marginTop: 0.5 },
+  evidenceText: { fontSize: 9.5, color: "#1a1a1a", flex: 1, lineHeight: 1.5 },
   sourceNote: { fontSize: 7.5, color: "#8888aa", fontFamily: "Helvetica-Oblique" },
   ctaBox: {
     marginTop: 18, marginHorizontal: 36, borderWidth: 1.5, borderColor: "#0066cc",
     borderStyle: "solid", borderRadius: 4, padding: 16,
   },
   ctaHeadline: { fontFamily: "Helvetica-Bold", fontSize: 11, color: "#1a1a2e", marginBottom: 5 },
-  ctaBody: { fontSize: 9, color: "#333344", lineHeight: 1.6, marginBottom: 6 },
-  ctaTestFrame: { fontSize: 8.5, color: "#0066cc", fontFamily: "Helvetica-Oblique" },
+  ctaBody: { fontSize: 10, color: "#1a1a1a", lineHeight: 1.6 },
   footer: {
-    position: "absolute", bottom: 18, left: 36, right: 36,
+    position: "absolute", bottom: 0, left: 0, right: 0,
+    backgroundColor: "#1a1a2e", paddingHorizontal: 36, paddingVertical: 10,
     flexDirection: "row", justifyContent: "space-between", alignItems: "center",
-    borderTopWidth: 0.5, borderTopColor: "#ccccdd", borderTopStyle: "solid", paddingTop: 6,
   },
-  footerText: { fontSize: 7, color: "#9999aa" },
-  pageNumber: { fontSize: 7, color: "#9999aa" },
+  footerText: { fontSize: 7.5, color: "#ffffff" },
+  pageNumber: { fontSize: 7.5, color: "#aaaacc" },
 });
 
 function SSSection({ s }: { s: PdfSection }) {
@@ -68,10 +69,10 @@ function SkepticalSwitcherPdf({ data }: { data: GeneratedPdf }) {
         <View style={ssStyles.header}>
           <Text style={ssStyles.headerBrand}>SCALER</Text>
           <Text style={ssStyles.headerHeadline}>{data.headline}</Text>
-          <Text style={ssStyles.headerSub}>{data.greeting}</Text>
         </View>
 
         <View style={ssStyles.body}>
+          <Text style={ssStyles.greeting}>{data.greeting}</Text>
           {data.sections.map((s, i) => <SSSection key={i} s={s} />)}
         </View>
 
@@ -81,7 +82,7 @@ function SkepticalSwitcherPdf({ data }: { data: GeneratedPdf }) {
         </View>
 
         <View style={ssStyles.footer} fixed>
-          <Text style={ssStyles.footerText}>Data sourced from audited reports. Details on scaler.com</Text>
+          <Text style={ssStyles.footerText}>Data sourced from audited reports</Text>
           <Text style={ssStyles.pageNumber} render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} />
         </View>
       </Page>
@@ -90,45 +91,50 @@ function SkepticalSwitcherPdf({ data }: { data: GeneratedPdf }) {
 }
 
 // ─── SENIOR_VALIDATOR ──────────────────────────────────────────────────────────
+// No header bar. Typography-led: charcoal text, green accents, alternating section backgrounds, minimal footer
 const svStyles = StyleSheet.create({
-  page: { backgroundColor: "#fafaf8", paddingTop: 32, paddingBottom: 44, fontFamily: "Times-Roman" },
-  header: { paddingHorizontal: 40, marginBottom: 6 },
-  headerRule: { borderBottomWidth: 1.5, borderBottomColor: "#2d2d2d", borderBottomStyle: "solid", marginBottom: 14 },
-  headerBrand: { fontFamily: "Helvetica-Bold", fontSize: 9, color: "#1a5c2a", letterSpacing: 4, marginBottom: 10 },
-  headerMeta: { fontFamily: "Helvetica", fontSize: 8, color: "#888878", marginBottom: 6 },
-  headerHeadline: { fontFamily: "Times-Bold", fontSize: 18, color: "#2d2d2d", lineHeight: 1.3, marginBottom: 6 },
-  greeting: { fontFamily: "Times-Roman", fontSize: 10, color: "#3d3d3d", lineHeight: 1.7, marginBottom: 20 },
-  body: { paddingHorizontal: 40 },
-  section: {
-    marginBottom: 18, backgroundColor: "#f5f0eb",
-    paddingHorizontal: 14, paddingVertical: 12,
-    borderLeftWidth: 3, borderLeftColor: "#1a5c2a", borderLeftStyle: "solid",
+  page: {
+    backgroundColor: "#ffffff", paddingTop: 36, paddingBottom: 50,
+    paddingHorizontal: 44, fontFamily: "Times-Roman",
   },
-  sectionTitle: { fontFamily: "Helvetica-Bold", fontSize: 9, color: "#2d2d2d", marginBottom: 7, letterSpacing: 0.5 },
-  sectionContent: { fontFamily: "Times-Roman", fontSize: 9.5, color: "#3d3d3d", lineHeight: 1.7, marginBottom: 8 },
+  headerBrand: { fontFamily: "Helvetica-Bold", fontSize: 14, color: "#2d2d2d", letterSpacing: 4, marginBottom: 10 },
+  headerHeadline: { fontFamily: "Times-Bold", fontSize: 20, color: "#2d2d2d", lineHeight: 1.25, marginBottom: 14 },
+  headerRule: { borderBottomWidth: 1, borderBottomColor: "#cccccc", borderBottomStyle: "solid", marginBottom: 16 },
+  greeting: { fontFamily: "Times-Roman", fontSize: 9, color: "#2d2d2d", lineHeight: 1.55, marginBottom: 20 },
+  sectionOdd: {
+    marginBottom: 14, paddingTop: 10, paddingBottom: 8,
+    borderTopWidth: 1, borderTopColor: "#1a5c2a", borderTopStyle: "solid",
+  },
+  sectionEven: {
+    marginBottom: 14, paddingTop: 10, paddingBottom: 8, paddingHorizontal: 8,
+    borderTopWidth: 1, borderTopColor: "#1a5c2a", borderTopStyle: "solid",
+    backgroundColor: "#faf8f5",
+  },
+  sectionTitle: { fontFamily: "Helvetica-Bold", fontSize: 9, color: "#1a5c2a", marginBottom: 5, letterSpacing: 0.5 },
+  sectionContent: { fontFamily: "Times-Roman", fontSize: 9, color: "#2d2d2d", lineHeight: 1.5, marginBottom: 6 },
   evidenceList: { marginBottom: 6 },
-  evidenceItem: { flexDirection: "row", marginBottom: 4 },
-  evidenceDash: { fontFamily: "Times-Roman", fontSize: 9, color: "#1a5c2a", marginRight: 7 },
-  evidenceText: { fontFamily: "Times-Roman", fontSize: 9, color: "#2d2d2d", flex: 1, lineHeight: 1.55 },
-  sourceNote: { fontFamily: "Times-Italic", fontSize: 7.5, color: "#9a9a88" },
+  evidenceItem: { flexDirection: "row", marginBottom: 3 },
+  evidenceDash: { fontFamily: "Times-Roman", fontSize: 9, color: "#1a5c2a", marginRight: 8 },
+  evidenceText: { fontFamily: "Times-Roman", fontSize: 9, color: "#2d2d2d", flex: 1, lineHeight: 1.45 },
+  sourceNote: { fontFamily: "Times-Italic", fontSize: 7, color: "#999988" },
   ctaBox: {
-    marginTop: 16, marginHorizontal: 40, borderWidth: 1, borderColor: "#1a5c2a",
-    borderStyle: "solid", padding: 16,
+    marginTop: 18, borderWidth: 1, borderColor: "#1a5c2a",
+    borderStyle: "solid", padding: 14,
   },
-  ctaHeadline: { fontFamily: "Helvetica-Bold", fontSize: 10.5, color: "#1a5c2a", marginBottom: 5 },
-  ctaBody: { fontFamily: "Times-Roman", fontSize: 9.5, color: "#3d3d3d", lineHeight: 1.6, marginBottom: 5 },
-  ctaTestFrame: { fontFamily: "Times-Italic", fontSize: 8.5, color: "#2d2d2d" },
+  ctaHeadline: { fontFamily: "Helvetica-Bold", fontSize: 10, color: "#1a5c2a", marginBottom: 4 },
+  ctaBody: { fontFamily: "Times-Roman", fontSize: 9, color: "#2d2d2d", lineHeight: 1.55 },
   footer: {
-    position: "absolute", bottom: 20, left: 40, right: 40,
+    position: "absolute", bottom: 18, left: 44, right: 44,
     flexDirection: "row", justifyContent: "space-between",
   },
-  footerText: { fontFamily: "Times-Italic", fontSize: 7, color: "#9a9a88" },
-  pageNumber: { fontFamily: "Times-Roman", fontSize: 7, color: "#9a9a88" },
+  footerText: { fontFamily: "Times-Italic", fontSize: 7, color: "#999988" },
+  pageNumber: { fontFamily: "Times-Roman", fontSize: 7, color: "#999988" },
 });
 
-function SVSection({ s }: { s: PdfSection }) {
+function SVSection({ s, index }: { s: PdfSection; index: number }) {
+  const style = index % 2 === 0 ? svStyles.sectionOdd : svStyles.sectionEven;
   return (
-    <View style={svStyles.section}>
+    <View style={style}>
       <Text style={svStyles.sectionTitle}>{s.title}</Text>
       <Text style={svStyles.sectionContent}>{s.content}</Text>
       {s.evidence.length > 0 && (
@@ -150,16 +156,12 @@ function SeniorValidatorPdf({ data }: { data: GeneratedPdf }) {
   return (
     <Document>
       <Page size="A4" style={svStyles.page}>
-        <View style={svStyles.header}>
-          <Text style={svStyles.headerBrand}>SCALER</Text>
-          <View style={svStyles.headerRule} />
-          <Text style={svStyles.headerHeadline}>{data.headline}</Text>
-          <Text style={svStyles.greeting}>{data.greeting}</Text>
-        </View>
+        <Text style={svStyles.headerBrand}>SCALER</Text>
+        <Text style={svStyles.headerHeadline}>{data.headline}</Text>
+        <View style={svStyles.headerRule} />
+        <Text style={svStyles.greeting}>{data.greeting}</Text>
 
-        <View style={svStyles.body}>
-          {data.sections.map((s, i) => <SVSection key={i} s={s} />)}
-        </View>
+        {data.sections.map((s, i) => <SVSection key={i} s={s} index={i} />)}
 
         <View style={svStyles.ctaBox} wrap={false}>
           <Text style={svStyles.ctaHeadline}>{data.cta.headline}</Text>
@@ -176,41 +178,42 @@ function SeniorValidatorPdf({ data }: { data: GeneratedPdf }) {
 }
 
 // ─── ANXIOUS_ASPIRER ───────────────────────────────────────────────────────────
+// Purple header bar, orange section titles, lavender evidence boxes with checkmarks, purple footer bar, larger body text
 const aaStyles = StyleSheet.create({
-  page: { backgroundColor: "#ffffff", paddingBottom: 50, fontFamily: "Helvetica" },
+  page: { backgroundColor: "#ffffff", paddingBottom: 70, fontFamily: "Helvetica" },
   header: {
-    backgroundColor: "#6b21a8", paddingHorizontal: 36, paddingTop: 30, paddingBottom: 28,
-    alignItems: "center",
+    backgroundColor: "#6b21a8", paddingHorizontal: 36,
+    paddingTop: 18, paddingBottom: 18, minHeight: 70, alignItems: "center",
   },
-  headerBrand: { fontFamily: "Helvetica-Bold", fontSize: 11, color: "#e9d5ff", letterSpacing: 5, marginBottom: 14 },
-  headerHeadline: { fontFamily: "Helvetica-Bold", fontSize: 17, color: "#ffffff", textAlign: "center", lineHeight: 1.35, marginBottom: 4 },
-  headerGreeting: { fontFamily: "Helvetica", fontSize: 9.5, color: "#e9d5ff", textAlign: "center", lineHeight: 1.6 },
+  headerBrand: { fontFamily: "Helvetica-Bold", fontSize: 12, color: "#e9d5ff", letterSpacing: 5, marginBottom: 8 },
+  headerHeadline: { fontFamily: "Helvetica-Bold", fontSize: 20, color: "#ffffff", textAlign: "center", lineHeight: 1.3 },
   body: { paddingHorizontal: 32, paddingTop: 22 },
-  section: {
-    marginBottom: 18, backgroundColor: "#f3e8ff",
-    borderRadius: 6, paddingHorizontal: 16, paddingVertical: 14,
+  greeting: { fontSize: 12, color: "#1a1a1a", lineHeight: 1.75, marginBottom: 18 },
+  section: { marginBottom: 20 },
+  sectionTitle: { fontFamily: "Helvetica-Bold", fontSize: 12, color: "#ea580c", marginBottom: 8 },
+  sectionContent: { fontSize: 12, color: "#1a1a1a", lineHeight: 1.8, marginBottom: 10 },
+  evidenceList: {
+    backgroundColor: "#f3e8ff", borderLeftWidth: 3, borderLeftColor: "#6b21a8",
+    borderLeftStyle: "solid", paddingLeft: 12, paddingRight: 10,
+    paddingVertical: 10, marginBottom: 8,
   },
-  sectionTitle: { fontFamily: "Helvetica-Bold", fontSize: 11, color: "#6b21a8", marginBottom: 8 },
-  sectionContent: { fontSize: 10, color: "#3d1a5e", lineHeight: 1.75, marginBottom: 10 },
-  evidenceList: { marginBottom: 8 },
   evidenceItem: { flexDirection: "row", marginBottom: 5 },
-  evidenceCheck: { fontFamily: "Helvetica-Bold", fontSize: 10, color: "#6b21a8", marginRight: 7 },
-  evidenceText: { fontSize: 9.5, color: "#3d1a5e", flex: 1, lineHeight: 1.55 },
-  sourceNote: { fontSize: 7.5, color: "#9966cc", fontFamily: "Helvetica-Oblique" },
+  evidenceCheck: { fontFamily: "Helvetica-Bold", fontSize: 12, color: "#6b21a8", marginRight: 7 },
+  evidenceText: { fontSize: 11, color: "#1a1a1a", flex: 1, lineHeight: 1.6 },
+  sourceNote: { fontSize: 8, color: "#9966cc", fontFamily: "Helvetica-Oblique" },
   ctaBox: {
-    marginTop: 18, marginHorizontal: 32, backgroundColor: "#ea580c",
+    marginTop: 20, marginHorizontal: 32, backgroundColor: "#ea580c",
     borderRadius: 6, paddingHorizontal: 20, paddingVertical: 18,
   },
-  ctaHeadline: { fontFamily: "Helvetica-Bold", fontSize: 13, color: "#ffffff", marginBottom: 6 },
-  ctaBody: { fontSize: 10, color: "#fff7ed", lineHeight: 1.65, marginBottom: 8 },
-  ctaTestFrame: { fontSize: 9, color: "#ffedd5", fontFamily: "Helvetica-Oblique" },
+  ctaHeadline: { fontFamily: "Helvetica-Bold", fontSize: 14, color: "#ffffff", marginBottom: 6 },
+  ctaBody: { fontSize: 12, color: "#fff7ed", lineHeight: 1.65 },
   footer: {
-    position: "absolute", bottom: 18, left: 32, right: 32,
-    borderTopWidth: 0.5, borderTopColor: "#d8b4fe", borderTopStyle: "solid",
-    paddingTop: 8, flexDirection: "row", justifyContent: "space-between",
+    position: "absolute", bottom: 0, left: 0, right: 0,
+    backgroundColor: "#6b21a8", paddingHorizontal: 32, paddingVertical: 10,
+    flexDirection: "row", justifyContent: "space-between", alignItems: "center",
   },
-  footerText: { fontSize: 7.5, color: "#9966cc", fontFamily: "Helvetica-Oblique" },
-  pageNumber: { fontSize: 7.5, color: "#9966cc" },
+  footerText: { fontSize: 8, color: "#e9d5ff" },
+  pageNumber: { fontSize: 8, color: "#e9d5ff" },
 });
 
 function AASection({ s }: { s: PdfSection }) {
@@ -240,10 +243,10 @@ function AnxiousAspirer({ data }: { data: GeneratedPdf }) {
         <View style={aaStyles.header}>
           <Text style={aaStyles.headerBrand}>SCALER</Text>
           <Text style={aaStyles.headerHeadline}>{data.headline}</Text>
-          <Text style={aaStyles.headerGreeting}>{data.greeting}</Text>
         </View>
 
         <View style={aaStyles.body}>
+          <Text style={aaStyles.greeting}>{data.greeting}</Text>
           {data.sections.map((s, i) => <AASection key={i} s={s} />)}
         </View>
 
@@ -262,6 +265,7 @@ function AnxiousAspirer({ data }: { data: GeneratedPdf }) {
 }
 
 // ─── Factory ───────────────────────────────────────────────────────────────────
+// Unknown personas fall through to SKEPTICAL_SWITCHER (clean, data-forward default)
 export function buildPdfDocument(data: GeneratedPdf): React.ReactElement<DocumentProps> {
   switch (data.persona) {
     case "SKEPTICAL_SWITCHER":
