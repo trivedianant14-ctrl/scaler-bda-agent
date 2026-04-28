@@ -43,6 +43,10 @@ Rules:
 - Each section must address a SPECIFIC question the lead asked, not generic program info.
 - The document tone must match the persona. Rohan's PDF should not read like Meera's.
 - Keep total content to 2-3 pages worth when rendered.
+- The 'cta.headline' and 'cta.body' fields are shown DIRECTLY to the lead inside the PDF. They must contain ONLY text addressed to the lead — no coaching instructions, no framing advice, no BDA-facing notes. Write them as if the lead is the only reader.
+- The 'test_framing' field is the ONLY place for BDA-facing framing advice (e.g. "frame it as a calibration exercise"). It will NOT appear in the PDF — it is stripped before rendering. Do not duplicate this content in cta.headline or cta.body.
+- The 'whatsapp_message' field is sent as a separate covering message on WhatsApp. It is NOT rendered in the PDF. Do not embed it in any section content, evidence bullet, or cta field.
+- Do not put internal instructions, framing notes, or meta-commentary anywhere in the JSON except 'test_framing'.
 
 Return ONLY valid JSON. No markdown formatting, no code fences, no preamble text.`;
 

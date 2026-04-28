@@ -251,6 +251,7 @@ export default function DashboardPage() {
   const [recipientPhone, setRecipientPhone] = useState(
     process.env.NEXT_PUBLIC_WHATSAPP_TO ?? ""
   );
+  const [leadPhone, setLeadPhone] = useState("");
   const [toast, setToast] = useState<ToastState | null>(null);
 
   // Auto-dismiss toast
@@ -433,9 +434,9 @@ export default function DashboardPage() {
 
   const handleApproveAndSend = async () => {
     if (!pdf || !pdfId) return;
-    const to = recipientPhone.trim();
+    const to = leadPhone.trim();
     if (!to) {
-      setToast({ message: "Enter a recipient WhatsApp number first.", type: "error" });
+      setToast({ message: "Enter the lead's WhatsApp number first.", type: "error" });
       return;
     }
     setSendingPdf(true);
@@ -530,21 +531,36 @@ export default function DashboardPage() {
                 placeholder="Paste relevant LinkedIn details: degree, past companies, certifications, projects, or any context about the lead"
               />
             </div>
-            {/* Shared recipient number */}
-            <div className="pt-2 border-t border-gray-100">
-              <label className="block text-sm font-medium text-gray-700">
-                WhatsApp Recipient Number
-                <span className="ml-1 text-gray-400 font-normal">(for nudge &amp; PDF send)</span>
-              </label>
-              <input
-                type="text"
-                className={inputCls}
-                placeholder="+91XXXXXXXXXX or whatsapp:+91XXXXXXXXXX"
-                value={recipientPhone}
-                onChange={(e) => setRecipientPhone(e.target.value)}
-              />
-              <p className="mt-1 text-xs text-gray-400">
-                Must be joined to the Twilio WhatsApp sandbox. Format: +countrycode followed by number.
+            {/* Phone numbers */}
+            <div className="pt-2 border-t border-gray-100 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  BDA WhatsApp Number
+                  <span className="ml-1 text-gray-400 font-normal">(nudge recipient)</span>
+                </label>
+                <input
+                  type="text"
+                  className={inputCls}
+                  placeholder="+91XXXXXXXXXX"
+                  value={recipientPhone}
+                  onChange={(e) => setRecipientPhone(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Lead WhatsApp Number
+                  <span className="ml-1 text-gray-400 font-normal">(PDF recipient)</span>
+                </label>
+                <input
+                  type="text"
+                  className={inputCls}
+                  placeholder="+91XXXXXXXXXX"
+                  value={leadPhone}
+                  onChange={(e) => setLeadPhone(e.target.value)}
+                />
+              </div>
+              <p className="col-span-full mt-0 text-xs text-gray-400">
+                Both numbers must be joined to the Twilio WhatsApp sandbox. Format: +countrycode followed by number.
               </p>
             </div>
           </div>
