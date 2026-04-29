@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import scalerKb from "@/src/lib/scaler-kb.json";
 import { extractJSON } from "@/src/lib/parse-json";
+import type { GeneratedPdf, PdfSection } from "@/src/lib/types";
+export type { GeneratedPdf, PdfSection };
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -53,26 +55,6 @@ Rules:
 - Do not put internal instructions, framing notes, or meta-commentary anywhere in the JSON except 'test_framing'.
 
 Return ONLY valid JSON. No markdown formatting, no code fences, no preamble text.`;
-
-export type PdfSection = {
-  title: string;
-  content: string;
-  evidence: string[];
-  source_note: string;
-};
-
-export type GeneratedPdf = {
-  persona: string;
-  headline: string;
-  greeting: string;
-  sections: PdfSection[];
-  cta: {
-    headline: string;
-    body: string;
-    test_framing: string;
-  };
-  whatsapp_message: string;
-};
 
 export async function POST(req: NextRequest) {
   if (!process.env.ANTHROPIC_API_KEY) {

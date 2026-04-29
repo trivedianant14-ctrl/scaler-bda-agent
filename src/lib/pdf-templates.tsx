@@ -1,7 +1,7 @@
 import React from "react";
 import { Document, Page, View, Text, StyleSheet } from "@react-pdf/renderer";
 import type { DocumentProps } from "@react-pdf/renderer";
-import type { GeneratedPdf, PdfSection } from "@/app/api/generate/route";
+import type { GeneratedPdf, PdfSection } from "@/src/lib/types";
 
 // ─── SKEPTICAL_SWITCHER ────────────────────────────────────────────────────────
 // Dark navy header bar, blue accents, gray evidence boxes, navy footer bar

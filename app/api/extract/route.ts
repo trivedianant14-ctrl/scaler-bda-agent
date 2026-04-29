@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { extractJSON } from "@/src/lib/parse-json";
+import type { ExtractedQuestion } from "@/src/lib/types";
+export type { ExtractedQuestion };
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -13,13 +15,6 @@ For each question, return:
 - bda_response_quality: "unanswered" (BDA deflected or said "I'll get back"), "weak" (BDA gave a vague answer), "partial" (some info but incomplete)
 
 Return ONLY valid JSON. No markdown formatting, no code fences, no preamble text.`;
-
-export type ExtractedQuestion = {
-  question: string;
-  category: "pricing_roi" | "curriculum_depth" | "placement_outcomes" | "program_fit" | "logistics" | "credibility";
-  urgency: "high" | "medium" | "low";
-  bda_response_quality: "unanswered" | "weak" | "partial";
-};
 
 export async function POST(req: NextRequest) {
   if (!process.env.ANTHROPIC_API_KEY) {

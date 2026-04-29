@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { renderToBuffer } from "@react-pdf/renderer";
 import { buildPdfDocument } from "@/src/lib/pdf-templates";
 import { storePdf } from "@/src/lib/pdf-store";
-import type { GeneratedPdf } from "@/app/api/generate/route";
+import type { GeneratedPdf } from "@/src/lib/types";
 
 export async function POST(req: NextRequest) {
   try {

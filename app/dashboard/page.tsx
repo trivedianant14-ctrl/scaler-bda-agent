@@ -4,8 +4,7 @@ export const dynamic = "force-dynamic";
 
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import type { ExtractedQuestion } from "@/app/api/extract/route";
-import type { GeneratedPdf, PdfSection } from "@/app/api/generate/route";
+import type { ExtractedQuestion, GeneratedPdf, PdfSection } from "@/src/lib/types";
 import { PdfEmbed } from "@/src/components/pdf-embed";
 
 type LeadForm = {
