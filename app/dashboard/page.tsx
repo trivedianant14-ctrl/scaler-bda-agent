@@ -249,7 +249,7 @@ export default function DashboardPage() {
 
   // Shared send state
   const [recipientPhone, setRecipientPhone] = useState(
-    process.env.NEXT_PUBLIC_WHATSAPP_TO ?? ""
+    process.env.NEXT_PUBLIC_BDA_DEFAULT_NUMBER ?? ""
   );
   const [leadPhone, setLeadPhone] = useState("");
   const [toast, setToast] = useState<ToastState | null>(null);

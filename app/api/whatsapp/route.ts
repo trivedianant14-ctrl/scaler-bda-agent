@@ -84,7 +84,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "message and to are required" }, { status: 400 });
     }
 
-    const toFormatted = to.startsWith("whatsapp:") ? to : `whatsapp:${to}`;
+    // Normalize to whatsapp:+<digits> — strip existing prefix and whitespace, then rebuild
+    const bare = to.trim().replace(/\s/g, "").replace(/^whatsapp:/i, "");
+    const toFormatted = bare.startsWith("+") ? `whatsapp:${bare}` : `whatsapp:+${bare}`;
     const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
     const from = process.env.TWILIO_WHATSAPP_FROM;
 
