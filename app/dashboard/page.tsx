@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import type { ExtractedQuestion } from "@/app/api/extract/route";
 import type { GeneratedPdf, PdfSection } from "@/app/api/generate/route";
+import { PdfEmbed } from "@/src/components/pdf-embed";
 
 type LeadForm = {
   name: string;
@@ -773,15 +774,10 @@ export default function DashboardPage() {
                       </button>
                     </div>
 
-                    {pdfId && (
+                    {pdfUrl && (
                       <div className="mt-6">
                         <p className="text-xs font-medium text-gray-500 mb-2">PDF Preview</p>
-                        <iframe
-                          src={`/api/pdf/${pdfId}`}
-                          title="PDF Preview"
-                          className="w-full rounded-lg border border-gray-200 shadow-sm"
-                          style={{ height: "600px" }}
-                        />
+                        <PdfEmbed url={pdfUrl} />
                       </div>
                     )}
                   </>
